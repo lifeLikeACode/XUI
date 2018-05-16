@@ -1,0 +1,36 @@
+@import '../common/mixin.styl'
+@import '../common/variable.styl'
+
+.x-button
+  display block
+  width 100%
+  padding 17px 16px
+  line-height 1
+  font-size $fontsize-large
+  background $btn-normal-bg
+  color $btn-normal-color
+  border-1px(#cccccc)
+  border none
+  outline none
+  -webkit-tap-highlight-color transparent
+  user-select none
+  &:active
+    background $btn-normal-active
+.x-button-inline
+  display inline-block
+  width auto
+  padding: 9px 10px
+  vertical-align middle
+.x-button-primary
+  border-1px($btn-primary-bg)
+  color $btn-primary-color
+  background $btn-primary-bg
+  &:active
+    background $btn-primary-active
+.x-button-danger
+  border-1px($btn-danger-bg)
+  color $btn-danger-color
+  background $btn-danger-bg
+  &:active
+    background $btn-danger-active
+
