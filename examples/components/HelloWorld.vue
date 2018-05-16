@@ -10,6 +10,9 @@
     <xbutton :disabled="false" :inline="true" @click="show()" :icon="pic" :danger="true">
       inline-danger
     </xbutton>
+    <xbutton :disabled="true" @click="show()" :icon="pic" :danger="true">
+      disabled
+    </xbutton>
 
     <xbutton :disabled="false" @click="show()">
       normal
@@ -22,6 +25,7 @@
     <xbutton :disabled="false" @click="show()" :icon="pic" :danger="true">
       danger
     </xbutton>
+
   </div>
 </template>
 
@@ -47,6 +51,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
-  button
-    margin 10px 0
+  html,body
+    marign 0
+    padding 0
+    button
+      margin 10px 0
 </style>

@@ -38,7 +38,8 @@ export default {
       return {
         'x-button-inline': this.inline,
         'x-button-primary': this.primary,
-        'x-button-danger': this.danger
+        'x-button-danger': this.danger,
+        'x-button-disabled': this.disabled
       }
     }
   },
