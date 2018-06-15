@@ -1,0 +1,41 @@
+@import '../common/mixin.styl'
+@import '../common/variable.styl'
+.x-dialog
+    position fixed
+    width 100%
+    height 100%
+    top 0
+    left 0
+    .x-dialog-mask
+        position absolute
+        width 100%
+        height 100%
+        top 0
+        left 0
+        background-color rgba(0,0,0,0.75)
+    .x-dialog-layer
+        position absolute
+        left: 50%
+        top: 50%
+        transform: translate(-50%,-50%)
+        width: 85%
+        border-radius: 6px
+        background: #fff
+        overflow hidden
+        .x-dialog-layer_title
+            padding: 15px 0 0 0
+            text-align: center
+            font-size: 16px
+            // margin: 0 0  15px 0
+        .x-dialog-layer_content
+            padding: 20px 8px
+            text-align: center
+            color: #ccc
+        .x-dialog-layer_footer
+            width: 100%
+            .x-dialog-layer-confirm
+                flex-basis: 50%
+                color #00aeff
+            .x-dialog-layer-cancel
+                flex-basis: 50%
+                

@@ -1,13 +1,29 @@
 <template>
-  <component :is="tag" class="x-button"  :class="btnClass" :disabled="disabled" @click="$_onBtnClick">
-    <i v-if="icon" :class="['icon-'+icon]"></i>
-    <slot></slot>
+  <component :is="tag" class="x-button"  :disabled="disabled" @click="$_onBtnClick" :class="[{ [`icon-${iconPosition}`]:true} ,btnClass]">
+    <xicon name="loading"  class="spin" v-if="loading"></xicon>
+    <xicon :name="iconName" v-if=" iconName && !loading"></xicon>
+    <div class="x-button-content">
+      <slot></slot>
+    </div>
   </component>
 </template>
 <script>
+import xicon from '../../icon/index.js'
 export default {
   name: 'xbutton',
   props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    iconPosition: {
+      type: String,
+      default: 'left'
+    },
+    iconName: {
+      type: String,
+      default: ''
+    },
     tag: {
       type: String,
       default: 'button'

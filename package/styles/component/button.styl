@@ -1,46 +1,77 @@
 @import '../common/mixin.styl'
 @import '../common/variable.styl'
-
+@keyframes spin 
+  0%
+    transform rotate(0deg)
+  100%
+    transform rotate(360deg)
 .x-button
   position relative
-  display block
+  display inline-flex
+  justify-content center
+  align-items center
   width 100%
-  padding 17px 16px
-  line-height 1
+  height $btn-height
+  // vertical-align middle
+  // line-height 1
+  // text-align center
   font-size $fontsize-large
   background $btn-normal-bg
   color $btn-normal-color
-  border-1px(#cccccc)
+  
+  border-1px($border-color)
   border none
   outline none
   -webkit-tap-highlight-color transparent
   user-select none
+  border-radius $radius-size-medium
+  overflow hidden
   &:active
-    background-color $btn-normal-active
+    &::before
+      position absolute
+      content ''
+      left 0
+      top 0
+      right 0
+      bottom 0
+      background-color $btn-active-background
+  .spin
+    animation spin 2s infinite linear
+.icon-left
+  .x-icon
+    order 1
+  .x-button-content
+    order 2
+.icon-right
+  .x-icon
+    order 2
+  .x-button-content
+    order 1
 .x-button-inline
-  display inline-block
   width auto
-  padding: 9px 10px
-  vertical-align middle
+  display inline-flex
+  font-size $fontsize-medium
+  padding: 0px 10px
+  height $btn-inline-height
 .x-button-primary
   border-1px($btn-primary-bg)
   color $btn-primary-color
-  // background $btn-primary-bg
-  background-image linear-gradient(90deg,#00aeff,#3369e7)
-  &:active
-    background $btn-primary-active
-    border-1px($btn-primary-active)
+  background $color-default
 .x-button-danger
   border-1px($btn-danger-bg)
   color $btn-danger-color
   background $btn-danger-bg
-  &:active
-    background $btn-danger-active
-    border-1px($btn-danger-active)
 .x-button-disabled
-  color #999
-  background #eee
-  border-1px(#e5e5e5)
+  color $border-color
+  background $background-color
+  border-1px($border-color)
   &:active
-    background #eee
-    border-1px(#e5e5e5)
+    &::before
+      position absolute
+      content ''
+      left 0
+      top 0
+      right 0
+      bottom 0
+      background-color rgba(0,0,0,0)
+

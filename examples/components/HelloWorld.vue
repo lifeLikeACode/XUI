@@ -1,22 +1,25 @@
 <template>
-  <div>
-    <xbutton :disabled="false" :inline="true" @click="show($event)">inline-normal</xbutton>
-    <xbutton :disabled="false" :inline="true" @click="show($event)" :primary="true">inline-primary </xbutton>
-    <xbutton :disabled="false" :inline="true" @click="show($event)" :icon="pic" :danger="true">inline-danger</xbutton>
-    <xbutton :disabled="true" :inline="true" @click="show($event)" :icon="pic" :danger="true">disabled</xbutton>
+  <div class="main">
+    <xgroupButton>
+      <xbutton iconName="left" :inline="true" @click="show($event)">图标按钮</xbutton>
+      <xbutton iconName="right" iconPosition="right" :inline="true" @click="show($event)">普通按钮</xbutton>
+    </xgroupButton>
 
-    <xbutton :disabled="false" @click="show($event)">
+    <xbutton :inline="true" @click="show($event)" :icon="pic" :danger="true">危险按钮</xbutton>
+    <xbutton iconName="smiling" iconPosition="right" :disabled="true" :inline="true" @click="show($event)" :icon="pic" :danger="true">禁用按钮</xbutton>
+
+    <xbutton iconName="download" :disabled="false" @click="show($event)">
       normal
     </xbutton>
 
-    <xbutton :disabled="false" @click="show($event)" :primary="true">
+    <xbutton :loading="loading1" @click="clickLoading($event)" :primary="true">
       primary
     </xbutton>
 
-    <xbutton :disabled="false" @click="show($event)" :icon="pic" :danger="true">
+    <xbutton :loading="loading1" iconPosition="right"  @click="clickLoading($event)" :icon="pic" :danger="true">
       danger
     </xbutton>
-    <xbutton  :disabled="true" @click="show($event)" :icon="pic" :danger="true">
+    <xbutton iconName="smiling" :disabled="true" @click="show($event)" :icon="pic" :danger="true">
       disabled
     </xbutton>
     <xswiper>
@@ -35,6 +38,16 @@
       <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">2</p></xswiperItem>
       <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">3</p></xswiperItem>
     </xswiper>
+    <br>
+    <xswiper :touchable="false">
+      <xswiperItem>
+        <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
+      </xswiperItem>
+      <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">2</p></xswiperItem>
+      <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">3</p></xswiperItem>
+    </xswiper>
+    <br/>
+    <xdialog :show="true" @confrim="closeDialog($event)" @cancle="closeDialog($event)" ></xdialog>
   </div>
 
 </template>
@@ -46,15 +59,21 @@ export default {
   data () {
     return {
       pic: 'pic',
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      loading1: false
     }
   },
   components: {
   },
   methods: {
     show (e) {
-      console.log(e)
-      console.log(this)
+
+    },
+    clickLoading (e) {
+      this.loading1 = !this.loading1
+    },
+    closeDialog (e) {
+
     }
   }
 }
@@ -68,7 +87,8 @@ export default {
     padding 0
     border none
     text-decoration none
-    button
-
-      margin 10px 0
+    .main
+      padding 0 10px
+      button
+        margin 10px 0
 </style>
