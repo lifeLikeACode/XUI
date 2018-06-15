@@ -1,5 +1,5 @@
 <template>
-  <component :is="tag" class="x-button" :class="btnClass" :disabled="disabled" @click="$_onBtnClick">
+  <component :is="tag" class="x-button"  :class="btnClass" :disabled="disabled" @click="$_onBtnClick">
     <i v-if="icon" :class="['icon-'+icon]"></i>
     <slot></slot>
   </component>

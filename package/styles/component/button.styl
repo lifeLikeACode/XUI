@@ -2,6 +2,7 @@
 @import '../common/variable.styl'
 
 .x-button
+  position relative
   display block
   width 100%
   padding 17px 16px
@@ -15,7 +16,7 @@
   -webkit-tap-highlight-color transparent
   user-select none
   &:active
-    background $btn-normal-active
+    background-color $btn-normal-active
 .x-button-inline
   display inline-block
   width auto
@@ -24,16 +25,22 @@
 .x-button-primary
   border-1px($btn-primary-bg)
   color $btn-primary-color
-  background $btn-primary-bg
+  // background $btn-primary-bg
+  background-image linear-gradient(90deg,#00aeff,#3369e7)
   &:active
     background $btn-primary-active
+    border-1px($btn-primary-active)
 .x-button-danger
   border-1px($btn-danger-bg)
   color $btn-danger-color
   background $btn-danger-bg
   &:active
     background $btn-danger-active
+    border-1px($btn-danger-active)
 .x-button-disabled
   color #999
   background #eee
   border-1px(#e5e5e5)
+  &:active
+    background #eee
+    border-1px(#e5e5e5)
