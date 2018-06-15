@@ -35,6 +35,14 @@
       <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">2</p></xswiperItem>
       <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">3</p></xswiperItem>
     </xswiper>
+    <br>
+    <xswiper :touchable="false">
+      <xswiperItem>
+        <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
+      </xswiperItem>
+      <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">2</p></xswiperItem>
+      <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">3</p></xswiperItem>
+    </xswiper>
   </div>
 
 </template>

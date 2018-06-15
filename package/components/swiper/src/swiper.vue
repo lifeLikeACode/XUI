@@ -9,6 +9,7 @@
       <slot></slot>
     </div>
     <div class="x-swiper-dot">
+      <i></i>
     </div>
   </div>
 </template>
@@ -41,7 +42,11 @@ export default {
       type: Number,
       default: 0
     },
-    autoplay: Number
+    autoplay: Number,
+    touchable: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {
@@ -87,6 +92,9 @@ export default {
 
     initialSwipe () {
       this.$_initSwiper()
+    },
+    loop () {
+      this.autoPlay()
     }
   },
   methods: {
@@ -100,17 +108,24 @@ export default {
       this.swipes.forEach(swipe => {
         swipe.offset = 0
       })
-      // this.autoPlay()
+      this.autoPlay()
     },
     $_initDot () {
 
     },
     onTouchStart (event) {
+      if (!this.touchable) {
+        return
+      }
+      this.clear()
       this.touchstart(event)
 
       this.correctPosition()
     },
     onTouchMove (event) {
+      if (!this.touchable) {
+        return
+      }
       this.touchmove(event)
       if ((this.vertical && this.direction === 'vertical') || this.direction === 'horizontal') {
         event.preventDefault()
@@ -119,11 +134,15 @@ export default {
       this.move(0, Math.min(Math.max(this.delta, -this.size), this.size))
     },
     onTouchEnd (event) {
+      if (!this.touchable) {
+        return
+      }
       if (this.delta) {
         const offset = this.vertical ? this.offsetY : this.offsetX
         this.move(offset > 50 ? (this.delta > 0 ? -1 : 1) : 0)
         this.swiping = false
       }
+      this.autoPlay()
     },
     move (move = 0, offset = 0) {
       const { delta, active, count, swipes, trackSize } = this
@@ -156,6 +175,24 @@ export default {
       }
       if (this.active >= this.count) {
         this.move(-this.count)
+      }
+    },
+    clear () {
+      clearTimeout(this.timer)
+    },
+    autoPlay () {
+      const { interval, loop, count } = this
+      if (loop || count > 1) {
+        this.clear()
+        this.timer = setInterval(() => {
+          this.swiping = true
+          this.correctPosition()
+          setTimeout(() => {
+            this.swiping = false
+            this.move(1)
+            this.autoPlay()
+          }, 30)
+        }, interval)
       }
     }
   },
