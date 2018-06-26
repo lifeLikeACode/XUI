@@ -1,6 +1,6 @@
 # x-ui
 
-> a vue ui lib
+> 一个vue的UI库 目前提供您swiper button dialog 功能
 
 ## Build Setup
 
