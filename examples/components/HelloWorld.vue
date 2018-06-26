@@ -49,7 +49,6 @@
     <br/>
     <xdialog :show="true" @confrim="closeDialog($event)" @cancle="closeDialog($event)" ></xdialog>
   </div>
-
 </template>
 
 <script>
