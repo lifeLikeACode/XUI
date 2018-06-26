@@ -2,9 +2,9 @@
   <component :is="tag" class="x-button"  :disabled="disabled" @click="$_onBtnClick" :class="[{ [`icon-${iconPosition}`]:true} ,btnClass]">
     <xicon name="loading"  class="spin" v-if="loading"></xicon>
     <xicon :name="iconName" v-if=" iconName && !loading"></xicon>
-    <div class="x-button-content">
+    <span class="x-button-content">
       <slot></slot>
-    </div>
+    </span>
   </component>
 </template>
 <script>

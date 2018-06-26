@@ -33,9 +33,22 @@
             color: #ccc
         .x-dialog-layer_footer
             width: 100%
-            .x-dialog-layer-confirm
-                flex-basis: 50%
-                color #00aeff
-            .x-dialog-layer-cancel
-                flex-basis: 50%
+            .x-group-button
+                &::after 
+                    content ''
+                    position absolute
+                    top 0
+                    left 0
+                    width 200%
+                    height 200%
+                    transform scale(.5)
+                    transform-origin 0 0
+                    pointer-events none
+                    border 0 solid #e5e5e5
+                .x-button
+                    flex 1
+                    &::after 
+                        border 0
+                .x-dialog-layer-confirm
+                    color #00aeff
                 

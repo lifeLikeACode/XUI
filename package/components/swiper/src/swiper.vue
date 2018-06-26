@@ -194,10 +194,19 @@ export default {
           }, 30)
         }, interval)
       }
+    },
+    $_resize () {
+      window.addEventListener('resize', () => {
+        this.$_initSwiper()
+      })
     }
+  },
+  created () {
+
   },
   mounted () {
     this.$_initSwiper()
+    this.$_resize()
   }
 }
 </script>

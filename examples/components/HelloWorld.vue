@@ -5,10 +5,15 @@
       <xbutton iconName="right" iconPosition="right" :inline="true" @click="show($event)">普通按钮</xbutton>
     </xgroupButton>
 
-    <xbutton :inline="true" @click="show($event)" :icon="pic" :danger="true">危险按钮</xbutton>
-    <xbutton iconName="smiling" iconPosition="right" :disabled="true" :inline="true" @click="show($event)" :icon="pic" :danger="true">禁用按钮</xbutton>
+    <xrow type="flex" justify="center">
+      <xcol :span="18">
+        <xbutton :inline="true" @click="show($event)" :icon="pic" :danger="true">危险按钮</xbutton>
+        <xbutton iconName="smiling" iconPosition="right" :disabled="true" :inline="true" @click="show($event)" :icon="pic" :danger="true">禁用按钮</xbutton>
+      </xcol>
+      <xcol :span="6">span 12</xcol>
+    </xrow>
 
-    <xbutton iconName="download" :disabled="false" @click="show($event)">
+    <xbutton iconName="download" :disabled="false" @click="showDialog($event)">
       normal
     </xbutton>
 
@@ -47,7 +52,9 @@
       <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">3</p></xswiperItem>
     </xswiper>
     <br/>
-    <xdialog :show="true" @confrim="closeDialog($event)" @cancle="closeDialog($event)" ></xdialog>
+    <xdialog cancel="否" confirm="是" title="自定义标题" ref="dialog" :dialogShow="dialogShow" @confrim="closeDialog($event)" @cancle="closeDialog($event)" @maskClick="closeDialog($event)" >
+      此处填写内容
+    </xdialog>
   </div>
 </template>
 
@@ -58,8 +65,8 @@ export default {
   data () {
     return {
       pic: 'pic',
-      msg: 'Welcome to Your Vue.js App',
-      loading1: false
+      loading1: false,
+      dialogShow: false
     }
   },
   components: {
@@ -72,7 +79,10 @@ export default {
       this.loading1 = !this.loading1
     },
     closeDialog (e) {
-
+      this.$refs.dialog.close()
+    },
+    showDialog (e) {
+      this.dialogShow = !this.dialogShow
     }
   }
 }
@@ -90,4 +100,7 @@ export default {
       padding 0 10px
       button
         margin 10px 0
+      .x-row
+        .x-button
+          margin 0
 </style>

@@ -5,13 +5,17 @@ import swiperItem from './components/swiperItem/index'
 import dialog from './components/dialog/index'
 import icon from './components/icon/index'
 import groupButton from './components/groupButton/index'
+import row from './components/row/index'
+import col from './components/col/index'
 const components = [
   button,
   swiper,
   swiperItem,
   dialog,
   icon,
-  groupButton
+  groupButton,
+  row,
+  col
 ]
 const install = (Vue) => {
   if (install.installed) return false
@@ -29,5 +33,7 @@ export default {
   swiperItem,
   dialog,
   icon,
-  groupButton
+  groupButton,
+  row,
+  col
 }
