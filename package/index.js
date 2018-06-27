@@ -7,6 +7,7 @@ import icon from './components/icon/index'
 import groupButton from './components/groupButton/index'
 import row from './components/row/index'
 import col from './components/col/index'
+import scroll from './components/scroll/index'
 const components = [
   button,
   swiper,
@@ -15,7 +16,8 @@ const components = [
   icon,
   groupButton,
   row,
-  col
+  col,
+  scroll
 ]
 const install = (Vue) => {
   if (install.installed) return false
@@ -35,5 +37,6 @@ export default {
   icon,
   groupButton,
   row,
-  col
+  col,
+  scroll
 }

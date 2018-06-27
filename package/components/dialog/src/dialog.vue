@@ -54,6 +54,9 @@ export default {
   watch: {
     dialogShow (val) {
       this.insideDialogShow = val
+    },
+    insideDialogShow (val) {
+      this.dialogShow = val
     }
   },
   computed: {

@@ -23,16 +23,28 @@
         background: #fff
         overflow hidden
         .x-dialog-layer_title
-            padding: 15px 0 0 0
-            text-align: center
-            font-size: 16px
+            padding 15px 0 0 0
+            text-align center
+            font-size 16px
             // margin: 0 0  15px 0
         .x-dialog-layer_content
-            padding: 20px 8px
-            text-align: center
-            color: #ccc
+            padding 20px 8px
+            text-align center
+            color #ccc
         .x-dialog-layer_footer
-            width: 100%
+            position relative
+            width 100%
+            &::after 
+                content ''
+                position absolute
+                top 0
+                left 0
+                width 200%
+                height 200%
+                transform scale(.5)
+                transform-origin 0 0
+                pointer-events none
+                border 0 solid #e5e5e5
             .x-group-button
                 &::after 
                     content ''

@@ -1,33 +1,65 @@
 <template>
+  <div>
   <div class="main">
+    <xrow :gutter="20" >
+      <xcol :span="8">
+        span：8
+      </xcol>
+      <xcol :span="8">
+        span：8
+      </xcol>
+      <xcol :span="8">
+        span：8
+      </xcol>
+    </xrow>
+    <xrow type="flex" justify="center">
+      <xcol :span="8" :offset="1">
+        span 8
+      </xcol>
+      <xcol :span="6" :offset="1">
+        span 6
+      </xcol>
+    </xrow>
+    <xrow type="flex" >
+      <xcol :span="6">
+        span 6
+      </xcol>
+      <xcol :span="6">
+        span 6
+      </xcol>
+      <xcol :span="6">
+        span 6
+      </xcol>
+    </xrow>
+    <xrow type="flex" justify="center">
+      <xcol :span="12" :offset="12">
+        offset : 12 span: 12
+      </xcol>
+    </xrow>
     <xgroupButton>
       <xbutton iconName="left" :inline="true" @click="show($event)">图标按钮</xbutton>
       <xbutton iconName="right" iconPosition="right" :inline="true" @click="show($event)">普通按钮</xbutton>
     </xgroupButton>
+    <xbutton iconName="smiling" iconPosition="left" :loading="loading1"  :inline="true" @click="show($event)"  :danger="true">危险按钮</xbutton>
+    <xbutton iconName="smiling" iconPosition="right" :disabled="true" :inline="true" @click="show($event)"  :danger="true">禁用按钮</xbutton>
 
-    <xrow type="flex" justify="center">
-      <xcol :span="18">
-        <xbutton :inline="true" @click="show($event)" :icon="pic" :danger="true">危险按钮</xbutton>
-        <xbutton iconName="smiling" iconPosition="right" :disabled="true" :inline="true" @click="show($event)" :icon="pic" :danger="true">禁用按钮</xbutton>
-      </xcol>
-      <xcol :span="6">span 12</xcol>
-    </xrow>
+    <xbutton :inline="true" @click="show($event)">图标按钮</xbutton>
+    <xbutton iconName="right" iconPosition="right" :inline="true" @click="show($event)">普通按钮</xbutton>
 
     <xbutton iconName="download" :disabled="false" @click="showDialog($event)">
       normal
     </xbutton>
-
     <xbutton :loading="loading1" @click="clickLoading($event)" :primary="true">
       primary
     </xbutton>
 
-    <xbutton :loading="loading1" iconPosition="right"  @click="clickLoading($event)" :icon="pic" :danger="true">
+    <xbutton :loading="loading1" iconPosition="right"  @click="clickLoading($event)"  :danger="true">
       danger
     </xbutton>
-    <xbutton iconName="smiling" :disabled="true" @click="show($event)" :icon="pic" :danger="true">
+    <xbutton iconName="smiling" :disabled="true" @click="show($event)"  :danger="true">
       disabled
     </xbutton>
-    <xswiper>
+    <xswiper :loop="false">
       <xswiperItem>
         <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
       </xswiperItem>
@@ -56,6 +88,10 @@
       此处填写内容
     </xdialog>
   </div>
+  <section class="main2">
+    <xscroll></xscroll>
+  </section>
+  </div>
 </template>
 
 <script>
@@ -64,7 +100,6 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      pic: 'pic',
       loading1: false,
       dialogShow: false
     }
@@ -82,7 +117,7 @@ export default {
       this.$refs.dialog.close()
     },
     showDialog (e) {
-      this.dialogShow = !this.dialogShow
+      this.dialogShow = true
     }
   }
 }
