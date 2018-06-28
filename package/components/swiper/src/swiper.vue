@@ -52,7 +52,7 @@ export default {
     return {
       width: 0,
       height: 0,
-      deltaX: 0, // 移动的距离
+      deltaX: 0,
       deltaY: 0,
       offset: 0,
       active: 0,
@@ -118,6 +118,7 @@ export default {
         return
       }
       this.clear()
+      this.swiping = true
       this.touchstart(event)
 
       this.correctPosition()

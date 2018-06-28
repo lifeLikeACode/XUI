@@ -1,7 +1,6 @@
 export default {
   methods: {
     touchstart (event) {
-      this.swiping = true
       this.direction = ''
       this.startX = event.touches[0].clientX
       this.startY = event.touches[0].clientY
