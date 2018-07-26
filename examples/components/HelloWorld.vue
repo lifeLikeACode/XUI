@@ -49,7 +49,7 @@
       <xbutton :inline="true" @click="show($event)">图标按钮</xbutton>
       <xbutton iconName="right" iconPosition="right" :inline="true" @click="show($event)">普通按钮</xbutton>
 
-      <xbutton iconName="download" :disabled="false" @click="showDialog($event)">
+      <xbutton :disabled="false" @click="showDialog($event)">
         normal
       </xbutton>
       <xbutton :loading="loading1" @click="clickLoading($event)" :primary="true">

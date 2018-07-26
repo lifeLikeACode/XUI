@@ -24,7 +24,7 @@ export default{
     tab: {
       type: Array,
       default () {
-        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 130, 14, 15, 160]
+        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
       }
     },
     // 近似等于超出边界时最大可拖动距离(px);
@@ -56,69 +56,61 @@ export default{
       deltaY: 0,
       offsetX: 0,
       offsetY: 0,
-      offset: 0,
       active: 0,
-      prevMove: 0
+      translateX: 0,
+      moveX: 0,
+      moveY: 0,
+      startX: 0,
+      startY: 0
     }
   },
   computed: {
+    start: {
+      get () {
+        return this.vertical ? this.startY : this.startX
+      },
+      set (val) {
+        this[this.vertical ? 'startY' : 'startX'] = val
+      }
+    },
     visibleArea () {
-      return getComputedStyle(this.$refs.visibleArea)[ this.vertical ? 'height' : 'width' ].replace('px', '')
+      return this.$refs.visibleArea[[ this.vertical ? 'offsetHeight' : 'offsetWidth' ]]
     },
     scrollWrapperArea () {
-      return getComputedStyle(this.$refs.scrollWrapper)[ this.vertical ? 'height' : 'width' ].replace('px', '')
+      return this.$refs.scrollWrapper[[ this.vertical ? 'offsetHeight' : 'offsetWidth' ]]
     },
     // 标签页的数量
     count () {
       return this.tab.length
     },
+    move: {
+      get () {
+        return this.vertical ? this.moveY : this.moveX
+      },
+      set (val) {
+        this[this.vertical ? 'moveY' : 'moveX'] = val
+      }
+
+    },
     // 移动距离
     delta () {
       return this.vertical ? this.deltaY : this.deltaX
     },
-    // tabWidth () {
-    //   let tabWidth
-    //   this.$nextTick(() => {
-    //     tabWidth = this.visibleArea / this.visibleAreaTab
-    //   })
-    //   return tabWidth
-    // },
-    // tabSize () {
-    //   const arr = []
-    //   this.$nextTick(() => {
-    //     this.$refs.scrollTab.forEach(item => {
-    //       console.log(item)
-    //       const itemStyle = getComputedStyle(item)[ this.vertical ? 'height' : 'width' ].replace('px', '')
-
-    //       arr.push(itemStyle)
-    //     })
-    //   })
-    //   return arr
-    // },
-    // tabStyle () {
-
-    //   return {
-    //     [ this.vertical ? 'marginTop' : 'marginLeft' ]: (this.tabWidth - itemStyle) / 2 + 'px',
-    //     [ this.vertical ? 'marginBottom' : 'marginRight' ]: (tabWidth - itemStyle) / 2 + 'px'
-    //   }
-    // },
     wrapperStyle () {
       return {
-        transform: `translate${this.vertical ? 'Y' : 'X'}(${this.offset}px)`,
+        transform: `translate${this.vertical ? 'Y' : 'X'}(${this.translateX}px)`,
         transitionDuration: `${this.transitionDuration}ms`,
-        transitionTimingFunction: this.transitionTimingFunction
+        transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
       }
     },
     transitionTimingFunction () {
       return this.reBounding ? 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'cubic-bezier(0.1, 0.57, 0.1, 1)'
     },
     transitionDuration () {
-      
-      
-      if (this.touching || (!this.reBounding && !this.touching)) {
+      if (this.touching) {
         return '0'
       }
-      if (this.reBounding && !this.touching) {
+      if (!this.touching) {
         return this.reBoundingDuration
       }
     },
@@ -129,7 +121,7 @@ export default{
       return this.delta > 0
     },
     leftWrapper () {
-      return 0
+      return window.screen.width - this.visibleArea
     },
     rightWrapper () {
       return this.visibleArea - this.scrollWrapperArea
@@ -141,9 +133,6 @@ export default{
     }
   },
   methods: {
-    $_initScroll () {
-
-    },
     $_bindEvent () {
       this.$el.addEventListener('touchstart', this.ontouchstart, false)
       this.$el.addEventListener('touchmove', this.ontouchmove, false)
@@ -152,48 +141,55 @@ export default{
     ontouchstart (e) {
       this.touching = true
       this.touchstart(e)
-      this.prevMove = this.offset
     },
     ontouchmove (e) {
       if (!this.touching) {
         return false
       }
+
       this.startMoveTime = this.endMoveTime ? this.endMoveTime : e.timeStamp
       e.preventDefault()
       e.stopPropagation()
       this.touchmove(e)
-      this.move()
+      this.moveFellowTouch()
       this.endMoveTime = e.timeStamp
     },
     ontouchend (e) {
+      this.touching = false
+      this.rebounding()
+
       let silenceTime = e.timeStamp - this.endMoveTime
       let timeStamp = this.endMoveTime - this.startMoveTime
       if (silenceTime > 100) return // 停顿时间超过100ms不产生惯性滑动;
       this.speed = this.delta / timeStamp
-      console.log(this.speed)
-      this.touching = false
     },
-    move () {
-      this.offset = this.delta + this.prevMove
+    moveFellowTouch () {
       if (this.isLeftMove) { // 向左拖动
-        if (this.offset < this.rightWrapper) {
-          // do something
-          this.offset = this.rightWrapper
-        }else{
-          this.offset = this.prevMove + this.delta
+        if (this.translateX <= this.rightWrapper) {
+          this.translateX += this.additionalX * (this.move - this.start) / (Math.abs(this.translateX + this.rightWrapper) + this.visibleArea)
+          console.log(this.translateX)
+        } else {
+          this.translateX += (this.move - this.start)
         }
       } else if (this.isRightMove) { // 向右拖动
-        if (this.offset > this.leftWrapper) {
-          // do something
-          this.offset = this.leftWrapper
-        }else{
-          this.offset = this.prevMove + this.delta
+        if (this.translateX >= this.leftWrapper) {
+          this.translateX += this.additionalX * (this.move - this.start) / (Math.abs(this.translateX + this.leftWrapper) + this.visibleArea)
+          console.log(this.translateX)
+        } else {
+          this.translateX += (this.move - this.start)
         }
+      }
+      this.start = this.move
+    },
+    rebounding () {
+      if (this.translateX > this.leftWrapper) {
+        this.translateX = this.leftWrapper
+      } else if (this.translateX < this.rightWrapper) {
+        this.translateX = this.rightWrapper
       }
     }
   },
   mounted () {
-    this.$_initScroll()
     this.$_bindEvent()
   }
 }

@@ -11,11 +11,14 @@ export default {
     },
     touchmove (event) {
       const touch = event.touches[0]
+      this.moveX = touch.clientX
+      this.moveY = touch.clientY
       this.deltaX = touch.clientX - this.startX
       this.deltaY = touch.clientY - this.startY
       this.offsetX = Math.abs(this.deltaX)
       this.offsetY = Math.abs(this.deltaY)
       this.direction = this.offsetX > this.offsetY ? 'horizontal' : this.offsetX < this.offsetY ? 'vertical' : ''
+      // scroll
     },
     touchend (event) {
 

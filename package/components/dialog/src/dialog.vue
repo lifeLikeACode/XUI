@@ -83,7 +83,6 @@ export default {
     }
   },
   mounted () {
-    console.log(xbutton, xgroupbutton)
   }
 }
 </script>

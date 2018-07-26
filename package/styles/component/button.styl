@@ -6,15 +6,13 @@
   100%
     transform rotate(360deg)
 .x-button
-  position relative
+  //position relative
   display flex
   justify-content center
+  -webkit-justify-content center
   align-items center
   width 100%
   height $btn-height
-  // vertical-align middle
-  // line-height 1
-  // text-align center
   font-size $fontsize-large
   background $btn-normal-bg
   color $btn-normal-color
@@ -25,7 +23,6 @@
   -webkit-tap-highlight-color transparent
   user-select none
   border-radius $radius-size-medium
-  // overflow hidden
   &:active
     &::before
       position absolute
