@@ -2,6 +2,7 @@
   <div>
     <section class="main2">
       <xscroll></xscroll>
+      <!-- <xscroll :vertical="true"></xscroll> -->
     </section>
     <div class="main">
       <xrow :gutter="20" >
@@ -59,10 +60,10 @@
       <xbutton :loading="loading1" iconPosition="right"  @click="clickLoading($event)"  :danger="true">
         danger
       </xbutton>
-      <xbutton iconName="smiling" :disabled="true" @click="show($event)"  :danger="true">
+      <xbutton  iconName="smiling" :disabled="true" @click="show($event)"  :danger="true">
         disabled
       </xbutton>
-      <xswiper>
+      <xswiper :loop="false" :autoplay="1000">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
         </xswiperItem>
@@ -71,7 +72,7 @@
       </xswiper>
 
       <br>
-      <xswiper :vertical="true">
+      <!-- <xswiper :vertical="true">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
         </xswiperItem>
@@ -85,9 +86,18 @@
         </xswiperItem>
         <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">2</p></xswiperItem>
         <xswiperItem><p style="text-align:center;line-height:200px;color:#ffffff;">3</p></xswiperItem>
-      </xswiper>
+      </xswiper> -->
       <br/>
-      <xdialog cancel="否" confirm="是" title="自定义标题" ref="dialog" :dialogShow="dialogShow" @confrim="closeDialog($event)" @cancle="closeDialog($event)" @maskClick="closeDialog($event)" >
+      <xdialog
+        cancel="否"
+        @close="closeDialog()"
+        confirm="是"
+        title="自定义标题"
+        :dialogShow="dialogShow"
+        @confrim="closeDialog($event)"
+        @cancle="closeDialog($event)"
+        @maskClick="closeDialog($event)"
+      >
         此处填写内容
       </xdialog>
     </div>
@@ -115,7 +125,7 @@ export default {
       this.loading1 = !this.loading1
     },
     closeDialog (e) {
-      this.$refs.dialog.close()
+      this.dialogShow = false
     },
     showDialog (e) {
       this.dialogShow = true

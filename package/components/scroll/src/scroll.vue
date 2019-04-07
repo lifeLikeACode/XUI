@@ -1,10 +1,9 @@
 <template>
-  <div class="x-scroll" ref="visibleArea" >
+  <div class="x-scroll" ref="visibleArea" :style="scrollStyle">
     <div class="x-scroll-wrapper" ref="scrollWrapper"  :style="wrapperStyle">
-      <div class="x-scroll-tab" ref="scrollTab" v-for="(item, index) in tab" :class="[ active === index ? 'x-scroll-tab-active': '' ]" :key="index" >tab{{item}}</div>
+      <div class="x-scroll-tab" ref="scrollTab" v-for="(item, index) in data" :class="[ active === index ? 'x-scroll-tab-active': '' ]" :key="index" >data{{item}}</div>
     </div>
   </div>
-
 </template>
 <script>
 import Touch from '../../../mixin/touch.js'
@@ -13,15 +12,20 @@ export default{
   mixins: [Touch],
   props: {
     // 默认水平显示横向滚动条
+
     vertical: {
       type: Boolean,
       default: false
     },
-    // visibleAreaTab: {
-    //   type: Number,
-    //   default: 4
-    // },
-    tab: {
+    scrollWidth: {
+      type: String,
+      default: '100%'
+    },
+    scrollHeight: {
+      type: String,
+      default: '100%'
+    },
+    data: {
       type: Array,
       default () {
         return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
@@ -77,6 +81,12 @@ export default{
         this[this.vertical ? 'startY' : 'startX'] = val
       }
     },
+    scrollStyle () {
+      return {
+        width: this.scrollWidth,
+        height: this.scrollHeight
+      }
+    },
     visibleArea () {
       return this.$refs.visibleArea[[ this.vertical ? 'offsetHeight' : 'offsetWidth' ]]
     },
@@ -94,7 +104,6 @@ export default{
       set (val) {
         this[this.vertical ? 'moveY' : 'moveX'] = val
       }
-
     },
     // 移动距离
     delta () {
@@ -125,7 +134,7 @@ export default{
       return this.delta > 0
     },
     leftWrapper () {
-      return window.screen.width - this.visibleArea
+      return this.$refs.visibleArea.offsetLeft
     },
     rightWrapper () {
       return this.visibleArea - this.scrollWrapperArea
@@ -239,8 +248,6 @@ export default{
     box-sizing border-box
     display flex
     position relative
-    width 100%
-    height 36px
     overflow hidden
     border 1px solid #ccc
     .x-scroll-wrapper
@@ -250,11 +257,9 @@ export default{
       padding 5px 10px 0px
       .x-scroll-tab
         padding 0 5px
-        // height 36px
         text-align center
         box-sizing border-box
         vertical-align middle
-        // line-height 36px
         &:not(:first-child){
           margin-left 15px
         }

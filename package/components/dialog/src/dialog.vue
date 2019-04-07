@@ -1,6 +1,6 @@
 <template>
-  <div class="x-dialog" v-show="insideDialogShow">
-    <div class="x-dialog-mask" v-show="mask" @click="$emit('maskClick',event)"></div>
+  <div class="x-dialog" v-show="dialogShow">
+    <div class="x-dialog-mask" v-show="mask" @click="maskClose()"></div>
     <div class="x-dialog-layer">
       <div class="x-dialog-layer_title" v-text="title"></div>
       <div class="x-dialog-layer_content">
@@ -48,25 +48,18 @@ export default {
   },
   data () {
     return {
-      insideDialogShow: this.dialogShow
+
     }
   },
-  watch: {
-    dialogShow (val) {
-      this.insideDialogShow = val
-    },
-    insideDialogShow (val) {
-      this.dialogShow = val
-    }
+  components: {
+    xbutton,
+    xgroupbutton
   },
   computed: {
   },
   methods: {
     close () {
-      this.insideDialogShow = false
-    },
-    alert () {
-      this.insideDialogShow = true
+      this.$emit('close', this.dialogShow)
     },
     cancelBtn () {
       this.$emit('cancel', event)
