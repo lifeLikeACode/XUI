@@ -1,5 +1,7 @@
-import Dialog from './src/dialog.vue'
-Dialog.install = function (Vue) {
-  Vue.component(Dialog.name, Dialog)
-}
-export default Dialog
+import Dialog from "./src/dialog.vue";
+import dialog from "./src/func-dialog.js";
+
+export default (Vue) => {
+	Vue.prototype.$dialog = dialog;
+	Vue.component(Dialog.name, Dialog);
+};
