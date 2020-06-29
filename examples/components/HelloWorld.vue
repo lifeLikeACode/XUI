@@ -2,7 +2,6 @@
   <div>
     <section class="main2">
       <xscroll></xscroll>
-      <!-- <xscroll :vertical="true"></xscroll> -->
     </section>
     <div class="main">
       <xrow :gutter="20">
@@ -16,14 +15,11 @@
           span：8
         </xcol>
       </xrow>
-      <xrow type="flex"
-            justify="center">
-        <xcol :span="8"
-              :offset="1">
+      <xrow type="flex" justify="center">
+        <xcol :span="8" :offset="1">
           span 8
         </xcol>
-        <xcol :span="6"
-              :offset="1">
+        <xcol :span="6" :offset="1">
           span 6
         </xcol>
       </xrow>
@@ -38,62 +34,76 @@
           span 6
         </xcol>
       </xrow>
-      <xrow type="flex"
-            justify="center">
-        <xcol :span="12"
-              :offset="12">
+      <xrow type="flex" justify="center">
+        <xcol :span="12" :offset="12">
           offset : 12 span: 12
         </xcol>
       </xrow>
       <xgroupButton>
-        <xbutton iconName="left"
-                 :inline="true"
-                 @click="show($event)">图标按钮</xbutton>
-        <xbutton iconName="right"
-                 iconPosition="right"
-                 :inline="true"
-                 @click="show($event)">普通按钮</xbutton>
+        <xbutton iconName="left" :inline="true" @click="show($event)"
+          >图标按钮</xbutton
+        >
+        <xbutton
+          iconName="right"
+          iconPosition="right"
+          :inline="true"
+          @click="show($event)"
+          >普通按钮</xbutton
+        >
       </xgroupButton>
-      <xbutton iconName="smiling"
-               iconPosition="left"
-               :loading="loading1"
-               :inline="true"
-               @click="show($event)"
-               :danger="true">危险按钮</xbutton>
-      <xbutton iconName="smiling"
-               iconPosition="right"
-               :disabled="true"
-               :inline="true"
-               @click="show($event)"
-               :danger="true">禁用按钮</xbutton>
+      <xbutton
+        iconName="smiling"
+        iconPosition="left"
+        :loading="loading1"
+        :inline="true"
+        @click="show($event)"
+        :danger="true"
+        >危险按钮</xbutton
+      >
+      <xbutton
+        iconName="smiling"
+        iconPosition="right"
+        :disabled="true"
+        :inline="true"
+        @click="show($event)"
+        :danger="true"
+        >禁用按钮</xbutton
+      >
 
-      <xbutton :inline="true"
-               @click="show($event)">图标按钮</xbutton>
-      <xbutton iconName="right"
-               iconPosition="right"
-               :inline="true"
-               @click="show($event)">普通按钮</xbutton>
+      <xbutton :inline="true" @click="show($event)">图标按钮</xbutton>
+      <xbutton
+        iconName="right"
+        iconPosition="right"
+        :inline="true"
+        @click="show($event)"
+        >普通按钮</xbutton
+      >
 
-      <xbutton :disabled="false"
-               @click="showDialog($event)">
+      <xbutton :disabled="false" @click="showDialog($event)">
         normal
       </xbutton>
-      <xbutton :loading="loading1"
-               @click="clickLoading($event)"
-               :primary="true">
+      <xbutton
+        :loading="loading1"
+        @click="clickLoading($event)"
+        :primary="true"
+      >
         primary
       </xbutton>
 
-      <xbutton :loading="loading1"
-               iconPosition="right"
-               @click="clickLoading($event)"
-               :danger="true">
+      <xbutton
+        :loading="loading1"
+        iconPosition="right"
+        @click="clickLoading($event)"
+        :danger="true"
+      >
         danger
       </xbutton>
-      <xbutton iconName="smiling"
-               :disabled="true"
-               @click="show($event)"
-               :danger="true">
+      <xbutton
+        iconName="smiling"
+        :disabled="true"
+        @click="show($event)"
+        :danger="true"
+      >
         disabled
       </xbutton>
       <xswiper :loop="false" :autoplay="1000">
@@ -108,7 +118,7 @@
         </xswiperItem>
       </xswiper>
 
-      <br>
+      <br />
       <!-- <xswiper :vertical="true">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
@@ -133,7 +143,7 @@
         </xswiperItem>
       </xswiper>
       <br />
-      <!-- <xdialog cancel="否"
+      <xdialog cancel="否"
                confirm="是"
                title="自定义标题"
                ref="dialog"
@@ -144,28 +154,26 @@
         此处填写内容
       </xdialog> -->
     </div>
-
   </div>
 </template>
-
 <script>
 export default {
   name: "HelloWorld",
-  data() {
+  data () {
     return {
       loading1: false
     };
   },
   components: {},
   methods: {
-    show(e) {},
-    clickLoading(e) {
+    show (e) {},
+    clickLoading (e) {
       this.loading1 = !this.loading1;
     },
-    closeDialog(e) {
+    closeDialog (e) {
       this.$refs.dialog.close();
     },
-    showDialog(e) {
+    showDialog (e) {
       this.$dialog();
     }
   }
