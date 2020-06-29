@@ -8,8 +8,10 @@ Vue.config.productionTip = false
 Vue.use(xUi)
 /* eslint-disable no-new */
 new Vue({
+  name: 'root',
   el: '#app',
   router,
   components: { App },
   template: '<App/>'
 })
+Vue.config.silent = true

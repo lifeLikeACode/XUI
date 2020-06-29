@@ -42,7 +42,7 @@ export default {
       type: Number,
       default: 0
     },
-    autoplay: Number,
+    // autoplay: Number,
     touchable: {
       type: Boolean,
       default: true
@@ -128,7 +128,7 @@ export default {
         return
       }
       this.touchmove(event)
-      if ((this.vertical && this.direction === 'vertical') || this.direction === 'horizontal') {
+      if ((this.vertical && this.direction === 'vertical') || (this.vertical && this.direction === 'horizontal')) {
         event.preventDefault()
         event.stopPropagation()
       }
@@ -182,8 +182,8 @@ export default {
       clearTimeout(this.timer)
     },
     autoPlay () {
-      const { interval, loop, count } = this
-      if (loop || count > 1) {
+      const { interval, count } = this
+      if (interval && count > 1) {
         this.clear()
         this.timer = setInterval(() => {
           this.swiping = true

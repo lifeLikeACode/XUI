@@ -2,6 +2,7 @@
   <div>
     <section class="main2">
       <xscroll></xscroll>
+      <!-- <xscroll :vertical="true"></xscroll> -->
     </section>
     <div class="main">
       <xrow :gutter="20">
@@ -95,7 +96,7 @@
                :danger="true">
         disabled
       </xbutton>
-      <xswiper>
+      <xswiper :loop="false" :autoplay="1000">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
         </xswiperItem>
@@ -108,7 +109,7 @@
       </xswiper>
 
       <br>
-      <xswiper :vertical="true">
+      <!-- <xswiper :vertical="true">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
         </xswiperItem>

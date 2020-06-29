@@ -1,16 +1,26 @@
 <template>
-  <component :is="tag" class="x-button"  :disabled="disabled" @click="$_onBtnClick" :class="[{ [`icon-${iconPosition}`]:true} ,btnClass]">
-    <xicon name="loading"  class="spin" v-if="loading"></xicon>
-    <xicon :name="iconName" v-if=" iconName && !loading"></xicon>
+  <component :is="tag"
+             class="x-button"
+             :disabled="disabled"
+             @click="$_onBtnClick"
+             :class="[{ [`icon-${iconPosition}`]:true} ,btnClass]">
+    <xicon name="loading"
+           class="spin"
+           v-if="loading"></xicon>
+    <xicon :name="iconName"
+           v-if=" iconName && !loading"></xicon>
     <span class="x-button-content">
       <slot></slot>
     </span>
   </component>
 </template>
 <script>
-import xicon from '../../icon/index.js'
+import xicon from "../../icon/index.js";
 export default {
-  name: 'xbutton',
+  name: "xbutton",
+  components: {
+    xicon
+  },
   props: {
     loading: {
       type: Boolean,
@@ -18,15 +28,15 @@ export default {
     },
     iconPosition: {
       type: String,
-      default: 'left'
+      default: "left"
     },
     iconName: {
       type: String,
-      default: ''
+      default: ""
     },
     tag: {
       type: String,
-      default: 'button'
+      default: "button"
     },
     disabled: {
       type: Boolean,
@@ -38,7 +48,7 @@ export default {
     },
     icon: {
       type: String,
-      default: ''
+      default: ""
     },
     primary: {
       type: Boolean,
@@ -50,26 +60,26 @@ export default {
     }
   },
   computed: {
-    btnClass () {
+    btnClass() {
       return {
-        'x-button-inline': this.inline,
-        'x-button-primary': this.primary,
-        'x-button-danger': this.danger,
-        'x-button-disabled': this.disabled
-      }
+        "x-button-inline": this.inline,
+        "x-button-primary": this.primary,
+        "x-button-danger": this.danger,
+        "x-button-disabled": this.disabled
+      };
     }
   },
   methods: {
-    $_onBtnClick (event) {
+    $_onBtnClick(event) {
       if (this.disabled) {
-        event.stopImmediatePropagation()
+        event.stopImmediatePropagation();
       } else {
-        this.$emit('click', event)
+        this.$emit("click", event);
       }
     }
   }
-}
+};
 </script>
 <style lang="stylus">
-  @import '../../../styles/component/button.styl'
+@import '../../../styles/component/button.styl';
 </style>
