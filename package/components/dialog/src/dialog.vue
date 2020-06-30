@@ -1,23 +1,20 @@
 <template>
-	<transition name="fade">
-		<div class="x-dialog"
-		     v-show="visible">
-			<div class="x-dialog-mask"
-			     v-show="mask"
-			     @click="maskClose"></div>
-			<div class="x-dialog-layer">
-				<div class="x-dialog-layer_title">
-					<slot name="title"></slot>
-				</div>
-				<div class="x-dialog-layer_content">
-					<slot name="content"></slot>
-				</div>
-				<div class="x-dialog-layer_footer">
-					<slot name="content"></slot>
-				</div>
-			</div>
-		</div>
-	</transition>
+  <transition name="fade">
+    <div class="x-dialog" v-show="visible">
+      <div class="x-dialog-mask" v-show="mask" @click="maskClose"></div>
+      <div class="x-dialog-layer">
+        <div class="x-dialog-layer_title">
+          <slot name="title"></slot>
+        </div>
+        <div class="x-dialog-layer_content">
+          <slot name="content"></slot>
+        </div>
+        <div class="x-dialog-layer_footer">
+          <slot name="content"></slot>
+        </div>
+      </div>
+    </div>
+  </transition>
 </template>
 <script>
 export default {
@@ -42,20 +39,32 @@ export default {
     isMaskClose: {
       type: Boolean,
       default: true
+    },
+    value:{
+      type:Boolean,
+      default:false
     }
   },
   data() {
     return {
-      visible: false
+      visible: this.value
     };
+  },
+  watch:{
+    value(val){
+      this.visible = val;
+      this.$emit("input",val);
+    }
   },
   methods: {
     close() {
       this.visible = false;
+      this.$emit("input",this.visible);
     },
-    // open() {
-    //   this.visible = true;
-    // },
+    show() {
+      this.visible = true;
+      this.$emit("input",this.visible);
+    },
     maskClose() {
       if (this.isMaskClose) {
         this.close();

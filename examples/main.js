@@ -3,9 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import xUi from '../package/index.js'
+import XUI from '../package/index.js'
 Vue.config.productionTip = false
-Vue.use(xUi)
+Vue.use(XUI)
 /* eslint-disable no-new */
 new Vue({
   name: 'root',

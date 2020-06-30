@@ -3,6 +3,8 @@ import button from './components/button/index'
 import swiper from './components/swiper/index'
 import swiperItem from './components/swiperItem/index'
 import dialog from './components/dialog/index'
+import Dialog from "./components/dialog/src/func-dialog.js";
+
 import icon from './components/icon/index'
 import groupButton from './components/groupButton/index'
 import row from './components/row/index'
@@ -19,9 +21,13 @@ const components = [
   col,
   scroll
 ]
+
 const install = (Vue) => {
   if (install.installed) return false
-  components.map(component => Vue.component(component.name, component))
+  components.map(component => {
+   return  Vue.component(component.name, component)
+  })
+  	Vue.prototype.$dialog = Dialog;
 }
 
 if (typeof window !== 'undefined' && window.Vue) {

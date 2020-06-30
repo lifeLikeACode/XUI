@@ -10,8 +10,9 @@ const remove = (instance) => {
   })
   instances.split(index, 1)
 }
-const dialog = (option) => {
-  const { title, content, footer } = option
+const dialog = (options) => {
+  
+  const { title = "", content = "", footer = "" } = options
   const instance = new DialogConstructor({
     props: {
       title,
@@ -20,11 +21,11 @@ const dialog = (option) => {
     }
   })
   instance.id = `dialog_${seed}`
-  instance.$slot.title = [title]
-  instance.$slot.content = [content]
-  instance.$slot.footer = [footer]
+  instance.$slots.title = title
+  instance.$slots.content = content
+  instance.$slots.footer = footer
   instance.vm = instance.$mount()
-  document.body.appendChild(instance.vm)
+  document.body.appendChild(instance.$el)
   instances.push(instance)
   instance.visible = true
   console.log(instance.vm)

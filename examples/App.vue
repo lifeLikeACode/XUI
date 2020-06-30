@@ -11,8 +11,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-html * {
-  padding: 0;
-  margin: 0;
-}
+// html * {
+//   padding: 0;
+//   margin: 0;
+// }
 </style>

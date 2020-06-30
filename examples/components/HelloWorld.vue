@@ -1,9 +1,9 @@
 <template>
   <div>
     <section class="main2">
-      <xscroll></xscroll>
+      <xscroll v-model="dataList"></xscroll>
     </section>
-    <div class="main">
+    <!-- <div class="main">
       <xrow :gutter="20">
         <xcol :span="8">
           span：8
@@ -118,7 +118,7 @@
         </xswiperItem>
       </xswiper>
 
-      <br />
+      <br /> -->
       <!-- <xswiper :vertical="true">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
@@ -143,25 +143,32 @@
         </xswiperItem>
       </xswiper>
       <br />
-      <xdialog cancel="否"
-               confirm="是"
-               title="自定义标题"
-               ref="dialog"
-               :dialogShow="dialogShow"
-               @confrim="closeDialog($event)"
-               @cancle="closeDialog($event)"
-               @maskClick="closeDialog($event)">
+       -->
+      <xdialog
+        cancel="否"
+        confirm="是"
+        title="自定义标题"
+        ref="dialog"
+        v-model="dialogShow"
+        @confrim="closeDialog($event)"
+        @cancle="closeDialog($event)"
+        @maskClick="closeDialog($event)"
+      >
         此处填写内容
-      </xdialog> -->
+      </xdialog>
     </div>
   </div>
 </template>
 <script>
+var arr = [];
+arr.length = 100;
 export default {
   name: "HelloWorld",
   data () {
     return {
-      loading1: false
+      loading1: false,
+      dialogShow: false,
+      dataList: arr.fill(1, 0, 100)
     };
   },
   components: {},
@@ -174,37 +181,45 @@ export default {
       this.$refs.dialog.close();
     },
     showDialog (e) {
-      this.$dialog();
+      // eslint-disable-next-line
+      //this.$refs.dialog.show();
+      this.$dialog({
+        title: "标题",
+        content: "内容",
+        footer: "footer"
+      })
+      // eslint-disable-next-line
+      //console.log(this.$dialog)
     }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="stylus">
+<style lang="stylus">
 html, body {
-  width: 100%;
-  marign: 0;
-  padding: 0;
-  border: none;
-  text-decoration: none;
+  width 100%
+  margin 0
+  padding 0
+  border none
+  text-decoration none
 
   .main {
-    padding: 0 10px;
+    padding 0 10px
 
-    button {
-      margin: 10px 0;
-    }
+    // button {
+    //   margin 10px 0
+    // }
 
-    .x-row {
-      .x-button {
-        margin: 0;
-      }
-    }
+    // .x-row {
+    //   .x-button {
+    //     margin 0
+    //   }
+    // }
   }
 
   .main2 {
-    margin: 10px 0;
+    // margin: 10px 0;
   }
 }
 </style>
