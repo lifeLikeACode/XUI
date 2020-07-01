@@ -1,9 +1,7 @@
 <template>
   <div>
-    <section class="main2">
-      <xscroll v-model="dataList"></xscroll>
-    </section>
-    <!-- <div class="main">
+    <section class="main2"></section>
+    <div class="main">
       <xrow :gutter="20">
         <xcol :span="8">
           span：8
@@ -106,7 +104,7 @@
       >
         disabled
       </xbutton>
-      <xswiper :loop="false" :autoplay="1000">
+      <!-- <xswiper :loop="false" :autoplay="1000">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
         </xswiperItem>
@@ -116,9 +114,9 @@
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">3</p>
         </xswiperItem>
-      </xswiper>
-
-      <br /> -->
+      </xswiper> -->
+      <xscroll v-model="dataList" class="x-scroll-style"></xscroll>
+      <xpicker title="标题"></xpicker>
       <!-- <xswiper :vertical="true">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
@@ -142,9 +140,8 @@
           <p style="text-align:center;line-height:200px;color:#ffffff;">3</p>
         </xswiperItem>
       </xswiper>
-      <br />
-       -->
-      <xdialog
+      <br />-->
+      <!-- <xdialog
         cancel="否"
         confirm="是"
         title="自定义标题"
@@ -155,7 +152,7 @@
         @maskClick="closeDialog($event)"
       >
         此处填写内容
-      </xdialog>
+      </xdialog> -->
     </div>
   </div>
 </template>
@@ -164,7 +161,7 @@ var arr = [];
 arr.length = 100;
 export default {
   name: "HelloWorld",
-  data () {
+  data() {
     return {
       loading1: false,
       dialogShow: false,
@@ -173,21 +170,21 @@ export default {
   },
   components: {},
   methods: {
-    show (e) {},
-    clickLoading (e) {
+    show(e) {},
+    clickLoading(e) {
       this.loading1 = !this.loading1;
     },
-    closeDialog (e) {
+    closeDialog(e) {
       this.$refs.dialog.close();
     },
-    showDialog (e) {
+    showDialog(e) {
       // eslint-disable-next-line
-      //this.$refs.dialog.show();
+      // this.$refs.dialog.show();
       this.$dialog({
         title: "标题",
         content: "内容",
         footer: "footer"
-      })
+      });
       // eslint-disable-next-line
       //console.log(this.$dialog)
     }
@@ -207,19 +204,26 @@ html, body {
   .main {
     padding 0 10px
 
-    // button {
-    //   margin 10px 0
-    // }
+    button {
+      margin 10px 0
+    }
 
-    // .x-row {
-    //   .x-button {
-    //     margin 0
-    //   }
-    // }
+    .x-row {
+      .x-button {
+        margin 0
+      }
+    }
   }
 
   .main2 {
     // margin: 10px 0;
   }
+}
+.x-scroll-style{
+  border: 1px solid #000;
+  margin: 0 auto;
+  height: 500px;
+  width: 80%;
+  transform: translateY(0%);
 }
 </style>
