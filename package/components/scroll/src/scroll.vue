@@ -1,5 +1,9 @@
 <template>
-  <div class="scroll" ref="scrollWrapper" :style="{ overflow: 'hidden' }">
+  <div
+    class="scroll"
+    ref="scrollWrapper"
+    :style="{ overflow: overflowHidden ? 'hidden' : 'visible' }"
+  >
     <div
       class="scroll-container"
       ref="scrollContainer"
@@ -10,7 +14,9 @@
       @touchcancel.prevent="touchend"
       @transitionend="onTransitionEnd"
     >
-      <div v-for="(item, index) in list" :key="index">{{ index }}</div>
+      <slot>
+        <div v-for="(item, index) in list" :key="index">{{ index }}</div>
+      </slot>
     </div>
   </div>
 </template>
@@ -25,13 +31,41 @@ export default {
         return [];
       }
     },
+    weekBounce: {
+      type: Number,
+      default: 800
+    },
+    strongBounce: {
+      type: Number,
+      default: 400
+    },
+    noBounce: {
+      type: Number,
+      default: 2500
+    },
+    pickResetBounce: {
+      type: Number,
+      default: 100
+    },
     direction: {
       type: String,
       default: ""
     },
     overflowHidden: {
       type: Boolean,
-      default: false
+      default: true
+    },
+    isPicker: {
+      type: Boolean,
+      default: true
+    },
+    pickerHeight: {
+      type: Number,
+      default: 44
+    },
+    acceleration: {
+      type: Number,
+      default: 0.002
     }
   },
   data() {
@@ -42,14 +76,14 @@ export default {
       offset: 0,
       baseDistance: 0, //记录上一次松手后的移动总距离
       startOffset: 0,
-
       startTime: 0,
       endTime: 0,
       normalScroll: 0,
-      bezier: "cubic-bezier(0,-0.02, 0.33, 1)",
+      bezier: "",
       momentumTimeThreshold: 300, // 惯性滑动的启动 时间阈值
       momentumYThreshold: 15, // 惯性滑动的启动 距离阈值
-      isStarted: false // start锁
+      isStarted: false, // start锁
+      transitionEndFlag: false
     };
   },
   computed: {
@@ -83,6 +117,7 @@ export default {
   },
   methods: {
     touchstart(e) {
+      this.transitionEndFlag = true;
       this.isStarted = true;
       this.duration = 0;
       this.stop();
@@ -128,19 +163,39 @@ export default {
         duration < this.momentumTimeThreshold
       ) {
         this.momentum();
+      } else {
+        this.fixPickerOffset();
       }
       this.normalScroll = this.offset;
       this.baseDistance = this.offset;
     },
     onTransitionEnd() {
       console.log("onTransitionEnd");
-
+      // if (!this.transitionEndFlag) {
+      //   return false;
+      // }
+      this.transitionEndFlag = false;
       //异步动画修复ios动画异常问题
       setTimeout(() => {
-        this.reset();
+        if (this.isPicker) {
+          this.fixPickerOffset();
+        } else {
+          this.reset();
+        }
       }, 16);
     },
     momentum() {
+      let type = "noBounce";
+      const durationMap = {
+        weekBounce: this.weekBounce,
+        strongBounce: this.strongBounce,
+        noBounce: this.noBounce
+      };
+      const bezierMap = {
+        noBounce: "cubic-bezier(.17, .89, .45, 1)",
+        weekBounce: "cubic-bezier(.25, .46, .45, .94)",
+        strongBounce: "cubic-bezier(.25, .46, .45, .94)"
+      };
       // 回弹阻力
       const bounceRate = 10;
       //弹性碰壁最长距离
@@ -155,23 +210,22 @@ export default {
         Math.abs(this.offset - this.normalScroll) /
         (this.endTime - this.startTime);
 
-      let destination = this.offset + (speed / 0.003) * (distance > 0 ? 1 : -1);
+      let destination =
+        this.offset + (speed / this.acceleration) * (distance > 0 ? 1 : -1);
 
       if (destination > this.min) {
         if (destination - this.min > maxOverflowY) {
-          this.duration = 400;
+          type = "strongBounce";
           destination = this.min + maxOverflowY;
-        } else {
-          this.duration = 800;
         }
       } else if (destination < this.max) {
         if (destination < this.max - maxOverflowY) {
-          this.duration = 400;
+          type = "strongBounce";
           destination = this.max - maxOverflowY;
-        } else {
-          this.duration = 800;
         }
       }
+      this.duration = durationMap[type];
+      this.bezier = bezierMap[type];
       this.offset = Math.round(destination);
       this.baseDistance = this.offset;
     },
@@ -202,6 +256,15 @@ export default {
         .getComputedStyle(this.$refs.scrollContainer)
         .getPropertyValue("transform");
       this.offset = Math.round(+matrix.split(")")[0].split(", ")[5]);
+    },
+    fixPickerOffset() {
+      if (this.isPicker) {
+        this.bezier = "cubic-bezier(0.23, 1, 0.68, 1)";
+        this.duration = this.pickResetBounce;
+        this.offset =
+          Math.round(this.offset / this.pickerHeight).toFixed(0) *
+          this.pickerHeight;
+      }
     }
   },
   mounted() {}
@@ -215,9 +278,9 @@ export default {
     div {
 
       text-align center
-      line-height 40px
-      height 40px
-      background green
+      line-height 44px
+      height 44px
+      // background green
     }
   }
 }

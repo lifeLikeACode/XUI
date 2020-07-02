@@ -115,8 +115,36 @@
           <p style="text-align:center;line-height:200px;color:#ffffff;">3</p>
         </xswiperItem>
       </xswiper> -->
-      <xscroll v-model="dataList" class="x-scroll-style"></xscroll>
-      <xpicker title="标题"></xpicker>
+
+      <xpicker
+        title="标题"
+        :columns="[
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]"
+      ></xpicker>
+      <!-- <xscroll v-model="dataList" class="x-scroll-style"></xscroll> -->
       <!-- <xswiper :vertical="true">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
@@ -224,6 +252,6 @@ html, body {
   margin: 0 auto;
   height: 500px;
   width: 80%;
-  transform: translateY(0%);
+  // transform: translateY(0%);
 }
 </style>
