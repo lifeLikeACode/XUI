@@ -13,11 +13,20 @@
           span：8
         </xcol>
       </xrow>
-      <xrow type="flex" justify="center">
-        <xcol :span="8" :offset="1">
+      <xrow
+        type="flex"
+        justify="center"
+      >
+        <xcol
+          :span="8"
+          :offset="1"
+        >
           span 8
         </xcol>
-        <xcol :span="6" :offset="1">
+        <xcol
+          :span="6"
+          :offset="1"
+        >
           span 6
         </xcol>
       </xrow>
@@ -32,22 +41,29 @@
           span 6
         </xcol>
       </xrow>
-      <xrow type="flex" justify="center">
-        <xcol :span="12" :offset="12">
+      <xrow
+        type="flex"
+        justify="center"
+      >
+        <xcol
+          :span="12"
+          :offset="12"
+        >
           offset : 12 span: 12
         </xcol>
       </xrow>
       <xgroupButton>
-        <xbutton iconName="left" :inline="true" @click="show($event)"
-          >图标按钮</xbutton
-        >
+        <xbutton
+          iconName="left"
+          :inline="true"
+          @click="show($event)"
+        >图标按钮</xbutton>
         <xbutton
           iconName="right"
           iconPosition="right"
           :inline="true"
           @click="show($event)"
-          >普通按钮</xbutton
-        >
+        >普通按钮</xbutton>
       </xgroupButton>
       <xbutton
         iconName="smiling"
@@ -56,8 +72,7 @@
         :inline="true"
         @click="show($event)"
         :danger="true"
-        >危险按钮</xbutton
-      >
+      >危险按钮</xbutton>
       <xbutton
         iconName="smiling"
         iconPosition="right"
@@ -65,19 +80,23 @@
         :inline="true"
         @click="show($event)"
         :danger="true"
-        >禁用按钮</xbutton
-      >
+      >禁用按钮</xbutton>
 
-      <xbutton :inline="true" @click="show($event)">图标按钮</xbutton>
+      <xbutton
+        :inline="true"
+        @click="show($event)"
+      >图标按钮</xbutton>
       <xbutton
         iconName="right"
         iconPosition="right"
         :inline="true"
         @click="show($event)"
-        >普通按钮</xbutton
-      >
+      >普通按钮</xbutton>
 
-      <xbutton :disabled="false" @click="showDialog($event)">
+      <xbutton
+        :disabled="false"
+        @click="showDialog($event)"
+      >
         normal
       </xbutton>
       <xbutton
@@ -119,30 +138,9 @@
       <xpicker
         title="标题"
         :columns="[
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16,
-          17,
-          18,
-          19,
-          20,
-          21,
-          22,
-          23
+          [{label:'浙江',value:'ZJ'},{label:'福建',value:'FJ'},{label:'北京',value:'BJ'},{label:'江苏',value:'JS'}],[{label:'浙江',value:'ZJ'},{label:'福建',value:'FJ'}],[{label:'浙江',value:'ZJ'},{label:'福建',value:'FJ'}]
         ]"
+        :data=[2,1,1]
       ></xpicker>
       <!-- <xscroll v-model="dataList" class="x-scroll-style"></xscroll> -->
       <!-- <xswiper :vertical="true">
@@ -189,7 +187,7 @@ var arr = [];
 arr.length = 100;
 export default {
   name: "HelloWorld",
-  data() {
+  data () {
     return {
       loading1: false,
       dialogShow: false,
@@ -198,14 +196,14 @@ export default {
   },
   components: {},
   methods: {
-    show(e) {},
-    clickLoading(e) {
+    show (e) { },
+    clickLoading (e) {
       this.loading1 = !this.loading1;
     },
-    closeDialog(e) {
+    closeDialog (e) {
       this.$refs.dialog.close();
     },
-    showDialog(e) {
+    showDialog (e) {
       // eslint-disable-next-line
       // this.$refs.dialog.show();
       this.$dialog({
@@ -223,22 +221,22 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus">
 html, body {
-  width 100%
-  margin 0
-  padding 0
-  border none
-  text-decoration none
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  text-decoration: none;
 
   .main {
-    padding 0 10px
+    padding: 0 10px;
 
     button {
-      margin 10px 0
+      margin: 10px 0;
     }
 
     .x-row {
       .x-button {
-        margin 0
+        margin: 0;
       }
     }
   }
@@ -247,7 +245,8 @@ html, body {
     // margin: 10px 0;
   }
 }
-.x-scroll-style{
+
+.x-scroll-style {
   border: 1px solid #000;
   margin: 0 auto;
   height: 500px;

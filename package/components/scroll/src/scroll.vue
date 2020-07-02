@@ -15,7 +15,10 @@
       @transitionend="onTransitionEnd"
     >
       <slot>
-        <div v-for="(item, index) in list" :key="index">{{ index }}</div>
+        <div
+          v-for="(item, index) in list"
+          :key="index"
+        >{{ index }}</div>
       </slot>
     </div>
   </div>
@@ -68,10 +71,10 @@ export default {
       default: 0.002
     }
   },
-  data() {
+  data () {
     return {
       list: this.value,
-      scrollWrapper: null,
+
       duration: 0,
       offset: 0,
       baseDistance: 0, //记录上一次松手后的移动总距离
@@ -87,16 +90,16 @@ export default {
     };
   },
   computed: {
-    min() {
+    min () {
       return 0;
     },
-    max() {
+    max () {
       return (
         this.$refs.scrollWrapper.getBoundingClientRect().height -
         parseFloat(window.getComputedStyle(this.$refs.scrollContainer).height)
       );
     },
-    style() {
+    style () {
       return {
         transform: `translate3d(0,${this.offset}px,0)`,
         "transition-duration": `${this.duration}ms`,
@@ -108,7 +111,7 @@ export default {
   },
   watch: {
     value: {
-      handler(val) {
+      handler (val) {
         this.list = val;
         this.$emit("input", val);
       },
@@ -116,7 +119,7 @@ export default {
     }
   },
   methods: {
-    touchstart(e) {
+    touchstart (e) {
       this.transitionEndFlag = true;
       this.isStarted = true;
       this.duration = 0;
@@ -127,7 +130,7 @@ export default {
       this.startTime = new Date().getTime();
       this.baseDistance = this.normalScroll = this.offset;
     },
-    touchmove(e) {
+    touchmove (e) {
       if (!this.isStarted) return;
       const touch = e.touches[0];
       const clientY = touch.clientY;
@@ -149,7 +152,7 @@ export default {
         this.startTime = now;
       }
     },
-    touchend(e) {
+    touchend (e) {
       if (!this.isStarted) return;
       this.isStarted = false;
       this.endTime = new Date().getTime();
@@ -169,11 +172,11 @@ export default {
       this.normalScroll = this.offset;
       this.baseDistance = this.offset;
     },
-    onTransitionEnd() {
+    onTransitionEnd () {
       console.log("onTransitionEnd");
-      // if (!this.transitionEndFlag) {
-      //   return false;
-      // }
+      if (!this.transitionEndFlag) {
+        return false;
+      }
       this.transitionEndFlag = false;
       //异步动画修复ios动画异常问题
       setTimeout(() => {
@@ -184,7 +187,7 @@ export default {
         }
       }, 16);
     },
-    momentum() {
+    momentum () {
       let type = "noBounce";
       const durationMap = {
         weekBounce: this.weekBounce,
@@ -229,7 +232,7 @@ export default {
       this.offset = Math.round(destination);
       this.baseDistance = this.offset;
     },
-    reset() {
+    reset () {
       let offset;
 
       if (this.offset > this.min) {
@@ -250,36 +253,43 @@ export default {
       }
       return false;
     },
-    stop() {
+    stop () {
       // 获取当前 translate 的位置
       const matrix = window
         .getComputedStyle(this.$refs.scrollContainer)
         .getPropertyValue("transform");
       this.offset = Math.round(+matrix.split(")")[0].split(", ")[5]);
     },
-    fixPickerOffset() {
+    fixPickerOffset () {
       if (this.isPicker) {
         this.bezier = "cubic-bezier(0.23, 1, 0.68, 1)";
         this.duration = this.pickResetBounce;
+        const index = Math.round(this.offset / this.pickerHeight).toFixed(0)
         this.offset =
-          Math.round(this.offset / this.pickerHeight).toFixed(0) *
+          index *
           this.pickerHeight;
+        this.$emit("get-picker-index", Math.abs(index))
       }
+    },
+    goTo (offset) {
+
+      this.baseDistance = offset
+      this.normalScroll = offset
+      this.offset = offset
+      this.$forceUpdate()
     }
   },
-  mounted() {}
+  mounted () { }
 };
 </script>
 
 <style lang="stylus" scoped>
 .scroll {
-
   &-container {
     div {
-
-      text-align center
-      line-height 44px
-      height 44px
+      text-align: center;
+      line-height: 44px;
+      height: 44px;
       // background green
     }
   }
