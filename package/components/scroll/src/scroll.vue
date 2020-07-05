@@ -15,10 +15,10 @@
       @transitionend="onTransitionEnd"
     >
       <slot>
-        <div
+        <!-- <div
           v-for="(item, index) in list"
           :key="index"
-        >{{ index }}</div>
+        ><p>{{ index }}</div> -->
       </slot>
     </div>
   </div>
@@ -71,7 +71,7 @@ export default {
       default: 0.002
     }
   },
-  data () {
+  data() {
     return {
       list: this.value,
 
@@ -90,16 +90,22 @@ export default {
     };
   },
   computed: {
-    min () {
+    min() {
       return 0;
     },
-    max () {
-      return (
-        this.$refs.scrollWrapper.getBoundingClientRect().height -
-        parseFloat(window.getComputedStyle(this.$refs.scrollContainer).height)
+    max() {
+      return this.wrapperHeight - this.scrollHeight;
+    },
+    wrapperHeight() {
+      return this.$refs.scrollWrapper.getBoundingClientRect().height;
+    },
+    scrollHeight() {
+      return parseFloat(
+        window.getComputedStyle(this.$refs.scrollContainer).height,
+        10
       );
     },
-    style () {
+    style() {
       return {
         transform: `translate3d(0,${this.offset}px,0)`,
         "transition-duration": `${this.duration}ms`,
@@ -111,7 +117,7 @@ export default {
   },
   watch: {
     value: {
-      handler (val) {
+      handler(val) {
         this.list = val;
         this.$emit("input", val);
       },
@@ -119,7 +125,7 @@ export default {
     }
   },
   methods: {
-    touchstart (e) {
+    touchstart(e) {
       this.transitionEndFlag = true;
       this.isStarted = true;
       this.duration = 0;
@@ -130,20 +136,35 @@ export default {
       this.startTime = new Date().getTime();
       this.baseDistance = this.normalScroll = this.offset;
     },
-    touchmove (e) {
+    touchmove(e) {
       if (!this.isStarted) return;
       const touch = e.touches[0];
       const clientY = touch.clientY;
+
       let offset = Math.round(clientY - this.startOffset + this.baseDistance);
-      //超出边界后滑动增加阻力
-      if (offset > this.min) {
-        offset = Math.round(
-          (clientY - this.startOffset) / 3 + this.baseDistance
-        );
-      } else if (offset < this.max) {
-        offset = Math.round(
-          (clientY - this.startOffset) / 3 + this.baseDistance
-        );
+      if (!this.isPicker) {
+        //超出边界后滑动增加阻力
+        if (offset > this.min) {
+          //console.log("超出顶部")
+
+          offset = Math.round(
+            (clientY - this.startOffset) / 3 + this.baseDistance
+          );
+        } else if (offset < this.max) {
+          //console.log("超出底部")
+          offset = Math.round(
+            (clientY - this.startOffset) / 3 + this.baseDistance
+          );
+        }
+      } else {
+        if (offset > this.min + this.pickerHeight) {
+          console.log("超出顶部");
+
+          offset = Math.round(this.min + this.pickerHeight);
+        } else if (offset < this.max - this.pickerHeight) {
+          console.log("超出底部");
+          offset = Math.round(this.max - this.pickerHeight);
+        }
       }
       this.offset = offset;
       const now = new Date().getTime();
@@ -152,7 +173,7 @@ export default {
         this.startTime = now;
       }
     },
-    touchend (e) {
+    touchend(e) {
       if (!this.isStarted) return;
       this.isStarted = false;
       this.endTime = new Date().getTime();
@@ -168,15 +189,18 @@ export default {
         this.momentum();
       } else {
         this.fixPickerOffset();
+        // setTimeout(() => {
+        //   this.reset();
+        // }, 16);
       }
       this.normalScroll = this.offset;
       this.baseDistance = this.offset;
     },
-    onTransitionEnd () {
-      console.log("onTransitionEnd");
+    onTransitionEnd() {
       if (!this.transitionEndFlag) {
         return false;
       }
+      console.log("onTransitionEnd");
       this.transitionEndFlag = false;
       //异步动画修复ios动画异常问题
       setTimeout(() => {
@@ -187,7 +211,7 @@ export default {
         }
       }, 16);
     },
-    momentum () {
+    momentum() {
       let type = "noBounce";
       const durationMap = {
         weekBounce: this.weekBounce,
@@ -232,7 +256,7 @@ export default {
       this.offset = Math.round(destination);
       this.baseDistance = this.offset;
     },
-    reset () {
+    reset() {
       let offset;
 
       if (this.offset > this.min) {
@@ -253,45 +277,31 @@ export default {
       }
       return false;
     },
-    stop () {
+    stop() {
       // 获取当前 translate 的位置
       const matrix = window
         .getComputedStyle(this.$refs.scrollContainer)
         .getPropertyValue("transform");
       this.offset = Math.round(+matrix.split(")")[0].split(", ")[5]);
     },
-    fixPickerOffset () {
+    fixPickerOffset() {
       if (this.isPicker) {
         this.bezier = "cubic-bezier(0.23, 1, 0.68, 1)";
         this.duration = this.pickResetBounce;
-        const index = Math.round(this.offset / this.pickerHeight).toFixed(0)
-        this.offset =
-          index *
-          this.pickerHeight;
-        this.$emit("get-picker-index", Math.abs(index))
+        const index = Math.round(this.offset / this.pickerHeight).toFixed(0);
+        this.offset = index * this.pickerHeight;
+        this.$emit("get-picker-index", Math.abs(index));
       }
     },
-    goTo (offset) {
-
-      this.baseDistance = offset
-      this.normalScroll = offset
-      this.offset = offset
-      this.$forceUpdate()
+    goTo(offset) {
+      this.baseDistance = offset;
+      this.normalScroll = offset;
+      this.offset = offset;
+      this.$forceUpdate();
     }
   },
-  mounted () { }
+  mounted() {}
 };
 </script>
 
-<style lang="stylus" scoped>
-.scroll {
-  &-container {
-    div {
-      text-align: center;
-      line-height: 44px;
-      height: 44px;
-      // background green
-    }
-  }
-}
-</style>
+<style lang="stylus" scoped></style>

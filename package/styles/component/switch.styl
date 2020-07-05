@@ -1,0 +1,81 @@
+@import '../common/mixin.styl'
+@import '../common/variable.styl'
+--button-width = 60px;
+--button-height = 30px; // (--button-width / 2);;
+--toggle-diameter = 24px;
+--button-toggle-offset = ((--button-height - --toggle-diameter) / 2);
+--toggle-shadow-offset = 10px;
+--toggle-wider = 28px;
+--button-inactive-background = #ccc;
+--button-active-background = rgb(7, 193, 96);
+
+.switch-label {
+  user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+.switch {
+  user-select: none;
+  position: relative;
+  display: inline-block;
+  width: --button-width;
+  height: --button-height;
+  background: --button-inactive-background;
+  border-radius: 22px;
+  text-align: left;
+  &-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  &::after {
+    position: absolute;
+    content: '';
+    width: --toggle-diameter;
+    height: --toggle-diameter;
+    border-radius: (--toggle-diameter / 2);
+    background: #fff;
+    top: --button-toggle-offset;
+    box-shadow: --toggle-shadow-offset 0 --toggle-shadow-offset * 4 rgba(0, 0, 0, 0.1);
+    transform: translateX(--button-toggle-offset);
+    transition: all 0.3s ease;
+  }
+
+  &:active {
+    &::after {
+      width: --toggle-wider;
+    }
+  }
+
+  &-active {
+    background: --button-active-background;
+
+    &:active {
+      &::after {
+        width: --toggle-wider;
+        transform: translateX(--button-width - --toggle-wider - --button-toggle-offset);
+      }
+    }
+  }
+
+  &-active::after {
+    transform: translateX(--button-width - --toggle-diameter - --button-toggle-offset);
+  }
+
+  .open-text {
+    position: absolute;
+    right: 15px;
+    font-size: $fontsize-medium
+  }
+
+  .close-text {
+    position: absolute;
+    left: 15px;
+    font-size: $fontsize-medium
+  }
+}
+
+input {
+  display: none;
+  outline: none;
+}

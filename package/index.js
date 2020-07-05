@@ -1,25 +1,28 @@
-import button from "./components/button/index";
-import swiper from "./components/swiper/index";
-import swiperItem from "./components/swiperItem/index";
+import Button from "./components/button/index";
+import Swiper from "./components/swiper/index";
+import SwiperItem from "./components/swiperItem/index";
 import dialog from "./components/dialog/index";
-import Dialog from "./components/dialog/src/func-dialog.js";
+// import Dialog from "./components/dialog/src/func-dialog.js";
 import icon from "./components/icon/index";
 import groupButton from "./components/groupButton/index";
 import row from "./components/row/index";
 import col from "./components/col/index";
 import scroll from "./components/scroll/index";
+import Switch from "./components/switch/index";
+
 import picker from "./components/picker/index";
 const components = [
-  button,
-  swiper,
-  swiperItem,
+  Button,
+  Swiper,
+  SwiperItem,
   dialog,
   icon,
   groupButton,
   row,
   col,
   scroll,
-  picker
+  picker,
+  Switch
 ];
 
 const install = Vue => {
@@ -27,7 +30,7 @@ const install = Vue => {
   components.map(component => {
     return Vue.component(component.name, component);
   });
-  Vue.prototype.$dialog = Dialog;
+  Vue.prototype.$dialog = dialog;
 };
 
 if (typeof window !== "undefined" && window.Vue) {
@@ -36,14 +39,15 @@ if (typeof window !== "undefined" && window.Vue) {
 document.body.addEventListener("touchstart", function() {});
 export default {
   install,
-  button,
-  swiper,
-  swiperItem,
+  Button,
+  Swiper,
+  SwiperItem,
   dialog,
   icon,
   groupButton,
   row,
   col,
   scroll,
-  picker
+  picker,
+  Switch
 };

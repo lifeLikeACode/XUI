@@ -1,14 +1,22 @@
 <template>
-  <component :is="tag"
-             class="x-button"
-             :disabled="disabled"
-             @click="$_onBtnClick"
-             :class="[{ [`icon-${iconPosition}`]:true} ,btnClass]">
-    <xicon name="loading"
-           class="spin"
-           v-if="loading"></xicon>
-    <xicon :name="iconName"
-           v-if=" iconName && !loading"></xicon>
+  <component
+    :is="tag"
+    class="x-button"
+    :disabled="disabled"
+    @click="$_onBtnClick"
+    :class="[{ [`icon-${iconPosition}`]:true} ,btnClass]"
+  >
+    <xicon
+      name="loading"
+      class="spin"
+      v-if="loading"
+      :color="iconColor"
+    ></xicon>
+    <xicon
+      :color="iconColor"
+      :name="iconName"
+      v-if=" iconName && !loading"
+    ></xicon>
     <span class="x-button-content">
       <slot></slot>
     </span>
@@ -57,6 +65,10 @@ export default {
     danger: {
       type: Boolean,
       default: false
+    },
+    iconColor: {
+      type: String,
+      default: ""
     }
   },
   computed: {

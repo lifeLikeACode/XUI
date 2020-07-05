@@ -18,26 +18,34 @@
       </button>
     </div>
 
-    <div class="picker-scroll-wrapper">
+    <div
+      class="picker-scroll-wrapper"
+      @touchstart.prevent="pickerScrollWrapperTouchStart"
+    >
       <div
         class="picker-scroll-column"
-        v-for="(column,idx) in columns"
+        v-for="(column, idx) in columns"
         :key="idx"
       >
         <scroll
-          :acceleration="0.008"
+          :acceleration="0.01"
           :overflowHidden="false"
           :noBounce="300"
-          :pickResetBounce="150"
-          :pickerHeight="44"
-          @get-picker-index="getPickerIndex(idx,...arguments)"
-          :ref="`scroll_${idx}`"
+          :pickResetBounce="300"
+          :pickerHeight="pickerHeight"
+          @get-picker-index="changePickerIndex(idx, ...arguments)"
+          ref="scroll"
           class="picker-scroll-container"
         >
           <div
             v-for="item in column"
             :key="item.value"
-          >{{ item.label }}</div>
+            class="picker-scroll-row"
+          >
+            <p class="picker-scroll-row-text">
+              {{ label ? item[label] : item }}
+            </p>
+          </div>
         </scroll>
       </div>
       <div class="picker-mask"></div>
@@ -76,124 +84,45 @@ export default {
     data: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
+    },
+    label: {
+      type: String,
+      default: ""
     }
+  },
+  data() {
+    return {
+      pickerHeight: 44
+    };
   },
   methods: {
-    confirm () {
-      this.$emit("confirm")
+    pickerScrollWrapperTouchStart() {},
+    confirm() {
+      this.$emit("confirm");
     },
-    cancel () {
-      this.$emit("cancel")
+    cancel() {
+      this.$emit("cancel");
     },
-    getPickerIndex (idx, index) {
-      console.log(idx, index)
-      const data = [...this.data];
-      data[idx] = index
-      this.$emit("change", data)
+    changePickerIndex(idx, index) {
+      const column = this.columns[idx][index];
+      // data[idx] = index
+      console.log(column);
+      this.$emit("change", column);
     },
-    initColumnIndex () {
+    initColumnIndex() {
       this.data.forEach((item, index) => {
-        this.$refs[`scroll_${index}`][0].goTo(item * -44)
-      })
+        this.$refs[`scroll`][index].goTo(item * -this.pickerHeight);
+      });
     }
   },
-  mounted () {
-    this.initColumnIndex()
+  mounted() {
+    this.initColumnIndex();
   }
 };
 </script>
 
 <style lang="stylus" scoped>
-.picker {
-  user-select: none;
-  width: 100%;
-  // height 260px
-  background: #ffffff;
-
-  // border 1px solid #000
-  &-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 44px;
-
-    // border-bottom 1px solid #ccc
-    &-button {
-      outline: none;
-      height: 100%;
-      padding: 0 16px;
-      font-size: 14px;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-    }
-
-    &__cancel {
-    }
-
-    &__confirm {
-    }
-  }
-
-  &-scroll-wrapper {
-    position: relative;
-    box-sizing: border-box;
-    overflow: hidden;
-    display: flex;
-    height: 220px;
-    width: 100%;
-  }
-
-  &-scroll-column {
-    position: relative;
-    flex: 1;
-  }
-
-  &-scroll-container {
-    box-sizing: border-box;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    height: 44px;
-    // width: 100%
-    transform: translateY(-50%);
-  }
-
-  &-mask {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    background-repeat: no-repeat;
-    background-position: top, bottom;
-    background-image: linear-gradient(180deg, hsla(0, 0%, 100%, 0.9), hsla(0, 0%, 100%, 0.4)), linear-gradient(0deg, hsla(0, 0%, 100%, 0.9), hsla(0, 0%, 100%, 0.4));
-    background-size: 100% 88px;
-  }
-
-  &-select-row {
-    pointer-events: none;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    height: 44px;
-    transform: translateY(-50%);
-
-    &:after {
-      position: absolute;
-      content: ' ';
-      transform: translateY(-50%);
-      border-top: 1px solid #ebedf0;
-      border-bottom: 1px solid #ebedf0;
-      transform: scale(0.5);
-      top: -50%;
-      left: -50%;
-      right: -50%;
-      bottom: -50%;
-    }
-  }
-}
+@import '../../../styles/component/picker.styl';
 </style>

@@ -1,6 +1,6 @@
-import Groupbutton from './src/groupButton.vue'
+import Groupbutton from "./src/groupButton.vue";
 
-Groupbutton.install = function (Vue) {
-  Vue.component(Groupbutton.name, Groupbutton)
-}
-export default Groupbutton
+Groupbutton.install = function(Vue) {
+  Vue.component(Groupbutton.name, Groupbutton);
+};
+export default Groupbutton;
