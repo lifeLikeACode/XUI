@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="main2"></section>
+    <!-- <section class="main2"></section>
     <div class="main">
       <xrow :gutter="20">
         <xcol :span="8">
@@ -138,8 +138,8 @@
         :danger="true"
       >
         disabled
-      </xbutton>
-      <!-- <xswiper :loop="false" :autoplay="1000">
+      </xbutton> -->
+    <!-- <xswiper :loop="false" :autoplay="1000">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
         </xswiperItem>
@@ -151,8 +151,8 @@
         </xswiperItem>
       </xswiper> -->
 
-      <!-- <xscroll v-model="dataList" class="x-scroll-style"></xscroll> -->
-      <!-- <xswiper :vertical="true">
+    <!-- <xscroll v-model="dataList" class="x-scroll-style"></xscroll> -->
+    <!-- <xswiper :vertical="true">
         <xswiperItem>
           <p style="text-align:center;line-height:200px;color:#ffffff;">1</p>
         </xswiperItem>
@@ -176,7 +176,7 @@
         </xswiperItem>
       </xswiper>
       <br />-->
-      <xdialog
+    <!-- <xdialog
         cancel="否"
         confirm="是"
         title="自定义标题"
@@ -203,7 +203,9 @@
       label="label"
       :data="[2, 1, 0]"
       @change="changePicker"
-    ></xpicker>
+    ></xpicker> -->
+    <br />
+    <ColorPicker v-model="color"></ColorPicker>
   </div>
 </template>
 <script>
@@ -213,6 +215,7 @@ export default {
   name: "HelloWorld",
   data() {
     return {
+      color: "#b9f307",
       loading1: false,
       dialogShow: false,
       dataList: arr.fill(1, 0, 100),

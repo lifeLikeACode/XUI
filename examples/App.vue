@@ -25,9 +25,9 @@ export default {
       },
       false
     );
-    // document.addEventListener("contextmenu", function(e) {
-    //   e.preventDefault();
-    // });
+    document.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+    });
     document.addEventListener("gesturestart", function(event) {
       event.preventDefault();
     });
@@ -35,7 +35,7 @@ export default {
 };
 </script>
 
-<style lang="stylus" >
+<style lang="stylus">
 html * {
   padding: 0;
   margin: 0;
