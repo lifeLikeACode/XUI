@@ -10,7 +10,8 @@ import col from "./components/col/index";
 import scroll from "./components/scroll/index";
 import Switch from "./components/switch/index";
 
-import picker from "./components/picker/index";
+import Picker from "./components/picker/index";
+import ColorPicker from "./components/color-picker/index";
 const components = [
   Button,
   Swiper,
@@ -21,8 +22,9 @@ const components = [
   row,
   col,
   scroll,
-  picker,
-  Switch
+  Picker,
+  Switch,
+  ColorPicker
 ];
 
 const install = Vue => {
@@ -48,6 +50,7 @@ export default {
   row,
   col,
   scroll,
-  picker,
-  Switch
+  Picker,
+  Switch,
+  ColorPicker
 };
